@@ -2,102 +2,125 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tribute Page</title>
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
+    <title>Temperature Converter</title>
     <style>
         body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to right, #141e30, #243b55);
-            color: white;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .container {
-            max-width: 900px;
-            margin: auto;
-            padding: 40px 20px;
-        }
-
-        h1 {
+        .converter {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             text-align: center;
-            font-size: 40px;
-            margin-bottom: 10px;
         }
 
-        h3 {
-            text-align: center;
-            font-weight: 300;
-            margin-bottom: 30px;
-        }
-
-        .image-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        img {
-            width: 250px;
-            border-radius: 50%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-        }
-
-        .content {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            line-height: 1.8;
-        }
-
-        p {
+        h2 {
             margin-bottom: 20px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
             font-size: 16px;
         }
 
-        footer {
-            text-align: center;
-            margin-top: 30px;
+        button {
+            background-color: #4facfe;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #3a8dde;
+        }
+
+        .result {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
             font-size: 14px;
-            opacity: 0.8;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Dr. A. P. J. Abdul Kalam</h1>
-    <h3>Missile Man of India</h3>
+<div class="converter">
+    <h2>Temperature Converter</h2>
 
-    <div class="image-section">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/A._P._J._Abdul_Kalam.jpg" alt="APJ Abdul Kalam">
-    </div>
+    <!-- Input field -->
+    <input type="text" id="tempInput" placeholder="Enter temperature">
 
-    <div class="content">
-        <p>
-            Dr. A. P. J. Abdul Kalam was one of the greatest scientists and leaders India has ever seen. 
-            He played a key role in India’s missile development programs and contributed immensely to 
-            the nation’s defense and space research.
-        </p>
+    <!-- Unit selection -->
+    <select id="unit">
+        <option value="celsius">Celsius (°C)</option>
+        <option value="fahrenheit">Fahrenheit (°F)</option>
+        <option value="kelvin">Kelvin (K)</option>
+    </select>
 
-        <p>
-            What I admire most about Dr. Kalam is his simplicity, humility, and dedication to education.
-            Despite achieving great success, he always remained grounded and inspired millions of students 
-            to dream big and work hard.
-        </p>
+    <!-- Convert button -->
+    <button onclick="convertTemp()">Convert</button>
 
-        <p>
-            His thoughts on leadership, innovation, and youth empowerment continue to guide future 
-            generations. Dr. Kalam truly believed that education and knowledge are the strongest weapons 
-            to change the world.
-        </p>
-    </div>
+    <!-- Error message -->
+    <div id="error" class="error"></div>
 
-    <footer>
-        Created with ❤️ as a Tribute Page
-    </footer>
+    <!-- Result display -->
+    <div id="result" class="result"></div>
 </div>
+
+<script>
+    function convertTemp() {
+        const input = document.getElementById("tempInput").value;
+        const unit = document.getElementById("unit").value;
+        const result = document.getElementById("result");
+        const error = document.getElementById("error");
+
+        // Clear previous messages
+        result.innerHTML = "";
+        error.innerHTML = "";
+
+        // Validation
+        if (input === "" || isNaN(input)) {
+            error.innerHTML = "Please enter a valid number!";
+            return;
+        }
+
+        const temp = parseFloat(input);
+        let converted = "";
+
+        if (unit === "celsius") {
+            const f = (temp * 9/5) + 32;
+            const k = temp + 273.15;
+            converted = `${f.toFixed(2)} °F | ${k.toFixed(2)} K`;
+        } 
+        else if (unit === "fahrenheit") {
+            const c = (temp - 32) * 5/9;
+            const k = c + 273.15;
+            converted = `${c.toFixed(2)} °C | ${k.toFixed(2)} K`;
+        } 
+        else if (unit === "kelvin") {
+            const c = temp - 273.15;
+            const f = (c * 9/5) + 32;
+            converted = `${c.toFixed(2)} °C | ${f.toFixed(2)} °F`;
+        }
+
+        result.innerHTML = converted;
+    }
+</script>
 
 </body>
 </html>
