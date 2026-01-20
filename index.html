@@ -2,102 +2,134 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tribute Page</title>
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
+    <title>Calculator</title>
     <style>
         body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to right, #141e30, #243b55);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: Arial, sans-serif;
+        }
+
+        .calculator {
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            width: 280px;
+        }
+
+        .display {
+            width: 100%;
+            height: 50px;
+            font-size: 22px;
+            margin-bottom: 15px;
+            text-align: right;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .operator {
+            background-color: #ff9500;
             color: white;
         }
 
-        .container {
-            max-width: 900px;
-            margin: auto;
-            padding: 40px 20px;
+        .number {
+            background-color: #333;
+            color: white;
         }
 
-        h1 {
-            text-align: center;
-            font-size: 40px;
-            margin-bottom: 10px;
+        .clear {
+            background-color: red;
+            color: white;
         }
 
-        h3 {
-            text-align: center;
-            font-weight: 300;
-            margin-bottom: 30px;
+        .equal {
+            background-color: green;
+            color: white;
+            grid-column: span 2;
         }
 
-        .image-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        img {
-            width: 250px;
-            border-radius: 50%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-        }
-
-        .content {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            line-height: 1.8;
-        }
-
-        p {
-            margin-bottom: 20px;
-            font-size: 16px;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 14px;
-            opacity: 0.8;
+        button:hover {
+            opacity: 0.85;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Dr. A. P. J. Abdul Kalam</h1>
-    <h3>Missile Man of India</h3>
+<div class="calculator">
+    <input type="text" class="display" id="display" disabled>
 
-    <div class="image-section">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/A._P._J._Abdul_Kalam.jpg" alt="APJ Abdul Kalam">
+    <div class="buttons">
+        <button class="clear">C</button>
+        <button class="operator">/</button>
+        <button class="operator">*</button>
+        <button class="operator">-</button>
+
+        <button class="number">7</button>
+        <button class="number">8</button>
+        <button class="number">9</button>
+        <button class="operator">+</button>
+
+        <button class="number">4</button>
+        <button class="number">5</button>
+        <button class="number">6</button>
+
+        <button class="number">1</button>
+        <button class="number">2</button>
+        <button class="number">3</button>
+
+        <button class="number">0</button>
+        <button class="number">.</button>
+        <button class="equal">=</button>
     </div>
-
-    <div class="content">
-        <p>
-            Dr. A. P. J. Abdul Kalam was one of the greatest scientists and leaders India has ever seen. 
-            He played a key role in India’s missile development programs and contributed immensely to 
-            the nation’s defense and space research.
-        </p>
-
-        <p>
-            What I admire most about Dr. Kalam is his simplicity, humility, and dedication to education.
-            Despite achieving great success, he always remained grounded and inspired millions of students 
-            to dream big and work hard.
-        </p>
-
-        <p>
-            His thoughts on leadership, innovation, and youth empowerment continue to guide future 
-            generations. Dr. Kalam truly believed that education and knowledge are the strongest weapons 
-            to change the world.
-        </p>
-    </div>
-
-    <footer>
-        Created with ❤️ as a Tribute Page
-    </footer>
 </div>
+
+<script>
+    const display = document.getElementById("display");
+    const buttons = document.querySelectorAll("button");
+
+    let currentInput = "";
+
+    buttons.forEach(button => {
+        button.addEventListener("click", () => {
+            const value = button.textContent;
+
+            if (value === "C") {
+                currentInput = "";
+                display.value = "";
+            }
+            else if (value === "=") {
+                try {
+                    currentInput = eval(currentInput);
+                    display.value = currentInput;
+                } catch {
+                    display.value = "Error";
+                }
+            }
+           else {
+                currentInput += value;
+                display.value = currentInput;
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
